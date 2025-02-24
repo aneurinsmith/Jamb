@@ -13,7 +13,20 @@ namespace Jamb
 	{
 
 	}
+	void Window::maximize()
+	{
 
+	}
+	void Window::minimize()
+	{
 
+	}
+	void Window::restore()
+	{
 
+	}
+	void Window::resize()
+	{
+
+	}
 }

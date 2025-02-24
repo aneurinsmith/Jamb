@@ -3,5 +3,8 @@
 
 int main() 
 {
+
+	Jamb::Window w;
+
 	return 0;
 }

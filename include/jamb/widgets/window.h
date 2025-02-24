@@ -6,11 +6,15 @@ namespace Jamb
 {
 	class Window : public BaseWidget
 	{
+	public:
 		Window();
 
 		// Window methods
 		void display();
-		void run();
+		void maximize();
+		void minimize();
+		void restore();
+		void resize();
 
 	private:
 

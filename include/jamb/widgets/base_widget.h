@@ -15,10 +15,31 @@
 
 namespace Jamb 
 {
+	struct JRect
+	{
+		int left = 0, 
+			top = 0, 
+			right = 0, 
+			bottom = 0;
+
+		int width()
+		{
+			return right - left;
+		}
+		int height()
+		{
+			return bottom - top;
+		}
+	};
 
 	class BaseWidget
 	{
+	protected:
 
+		void* handle;
+		void* parent;
+		bool is_fullscreen;
+
+		JRect region;
 	};
-
 }
