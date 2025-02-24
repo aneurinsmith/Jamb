@@ -38,6 +38,7 @@ endif()
 
 # get the relevent source files
 file(GLOB_RECURSE jamb_src "src/*.h" "src/*.cpp")
+message(STATUS ${jamb_src})
 
 # create the libjamb library
 add_library(jamb STATIC ${jamb_src})
