@@ -1,1 +1,12 @@
 
+Add window implementation
+	Should be able to add and remove widgets
+	Perhaps use a RootWindow class for windows that are detached (i.e. should be child of DWM)
+		If window has parent, the draw method should be called by the parent rather then DWM
+
+Add various widgets
+	Add docker widget
+	Add tabs widget
+	Add menu widget
+	Add button widget
+	Add scrollbar widget
