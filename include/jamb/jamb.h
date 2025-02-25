@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "widgets/window.h"
+#include "widgets/container_widget.h"
 
 namespace Jamb
 {
