@@ -1,17 +1,9 @@
 
-#ifdef win32
-	#define NOMINMAX
-	#define WIN32_LEAN_AND_MEAN
-	#define WINVER 0x0605
-	#include <Windows.h>
-	#undef ERROR
-#elif libx11
-	#include <X11/Xlib.h>
-	#include <X11/extensions/Xrandr.h>
-	#include <X11/Xutil.h>
-	#include <X11/Xatom.h>
-	#include <X11/Xft/Xft.h>
-#endif
+#include <memory>
+#include <vector>
+#include <stdexcept>
+#include <algorithm>
+#include <iostream>
 
 namespace Jamb 
 {
@@ -34,12 +26,67 @@ namespace Jamb
 
 	class BaseWidget
 	{
+	public:
+		BaseWidget() : m_parent(nullptr) {};
+		BaseWidget(BaseWidget& parent)
+		{
+			parent.add_child(*this);
+		}
+
+		BaseWidget& get_parent()
+		{
+			return *m_parent;
+		}
+
+		bool add_child(BaseWidget& child)
+		{
+			if (&child.get_parent()) {
+				return false;
+			}
+			else {
+				const BaseWidget* current = this;
+				while (current != nullptr) {
+					if (current == &child) {
+						return false;
+					}
+					current = current->m_parent;
+				}
+			}
+
+			child.m_parent = this;
+			children.push_back(&child);
+			return true;
+		}
+
+		void render()
+		{
+			on_draw();
+			for (const auto& child : children) {
+				child->render();
+			}
+		}
+
+		int get_width()
+		{
+			return region.width();
+		}
+
+		int get_height()
+		{
+			return region.height();
+		}
+
 	protected:
 
-		void* handle;
-		void* parent;
-		bool is_fullscreen;
+		void* m_handle;
+
+		BaseWidget* m_parent;
+		std::vector<BaseWidget*> children;
 
 		JRect region;
+
+
+		virtual void on_draw() = 0;
+
 	};
 }
