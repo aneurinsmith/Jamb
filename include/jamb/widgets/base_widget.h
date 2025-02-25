@@ -33,11 +33,6 @@ namespace Jamb
 			parent.add_child(*this);
 		}
 
-		BaseWidget& get_parent()
-		{
-			return *m_parent;
-		}
-
 		bool add_child(BaseWidget& child)
 		{
 			if (&child.get_parent()) {
@@ -58,12 +53,11 @@ namespace Jamb
 			return true;
 		}
 
-		void render()
+
+
+		BaseWidget& get_parent()
 		{
-			on_draw();
-			for (const auto& child : children) {
-				child->render();
-			}
+			return *m_parent;
 		}
 
 		int get_width()
@@ -85,6 +79,13 @@ namespace Jamb
 
 		JRect region;
 
+		void render()
+		{
+			on_draw();
+			for (const auto& child : children) {
+				child->render();
+			}
+		}
 
 		virtual void on_draw() = 0;
 

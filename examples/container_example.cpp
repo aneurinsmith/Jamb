@@ -22,7 +22,5 @@ int main()
 	panel2.add_child(cpanel1);	 // will return false and do nothing, due to cpanel1 already having parent
 	panel2.add_child(cpanel3);
 
-	container.render();
-
 	return 0;
 }
