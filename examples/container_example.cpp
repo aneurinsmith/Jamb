@@ -3,6 +3,8 @@
 
 int main() 
 {
+	Jamb::JWindow window;
+
 	Jamb::JContainer container;
 	Jamb::JContainer panel1;
 	Jamb::JContainer panel2;
