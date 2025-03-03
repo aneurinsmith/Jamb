@@ -1,9 +1,15 @@
 
 #include "jamb/jamb.h"
 
+class Win : public Jamb::JWindow
+{
+public:
+	int i;
+};
+
 int main() 
 {
-	Jamb::JWindow window;
+	Win window;
 
 	Jamb::JContainer container;
 	Jamb::JContainer panel1;
