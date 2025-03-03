@@ -5,7 +5,7 @@ project ("Jamb")
 include(GenerateExportHeader)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
-include_directories("include/jamb")
+include_directories("include")
 
 set(JAMB_VERSION 0.0.1)
 
@@ -60,8 +60,8 @@ add_library(jamb STATIC ${jamb_src})
 # set include directory for header files
 target_include_directories(jamb 
 	PUBLIC
-	"$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/jamb>"
-	"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/jamb>"
+	"$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+	"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 )
 
 # add platform definition to targets file
