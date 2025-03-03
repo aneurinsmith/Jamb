@@ -6,8 +6,7 @@ namespace Jamb
 {
 	class JWindow : public JBaseWidget
 	{
-		friend JEventLoop;
 	protected:
-		virtual void render(JContext* ctx) {}
+		void render();
 	};
 }

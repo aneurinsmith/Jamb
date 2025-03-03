@@ -1,14 +1,14 @@
 
-#include "jamb.h"
+#include "jamb/jamb.h"
 
 int main() 
 {
-	Jamb::ContainerWidget container;
-	Jamb::ContainerWidget panel1;
-	Jamb::ContainerWidget panel2;
-	Jamb::ContainerWidget cpanel1;
-	Jamb::ContainerWidget cpanel2;
-	Jamb::ContainerWidget cpanel3;
+	Jamb::JContainer container;
+	Jamb::JContainer panel1;
+	Jamb::JContainer panel2;
+	Jamb::JContainer cpanel1;
+	Jamb::JContainer cpanel2;
+	Jamb::JContainer cpanel3;
 
 	container.add_child(panel1);
 	container.add_child(panel2);

@@ -3,14 +3,9 @@
 
 namespace Jamb 
 {
-	class ContainerWidget : public BaseWidget
+	class JContainer : public JBaseWidget
 	{
 	protected:
-
-		void on_draw()
-		{
-
-		}
-
+		void render();
 	};
 }

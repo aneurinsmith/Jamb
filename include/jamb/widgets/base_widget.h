@@ -24,22 +24,22 @@ namespace Jamb
 		}
 	};
 
-	class BaseWidget
+	class JBaseWidget
 	{
 	public:
-		BaseWidget() : m_parent(nullptr) {};
-		BaseWidget(BaseWidget& parent)
+		JBaseWidget() : m_parent(nullptr) {};
+		JBaseWidget(JBaseWidget& parent)
 		{
 			parent.add_child(*this);
 		}
 
-		bool add_child(BaseWidget& child)
+		bool add_child(JBaseWidget& child)
 		{
 			if (&child.get_parent()) {
 				return false;
 			}
 			else {
-				const BaseWidget* current = this;
+				const JBaseWidget* current = this;
 				while (current != nullptr) {
 					if (current == &child) {
 						return false;
@@ -55,7 +55,7 @@ namespace Jamb
 
 
 
-		BaseWidget& get_parent()
+		JBaseWidget& get_parent()
 		{
 			return *m_parent;
 		}
@@ -72,8 +72,8 @@ namespace Jamb
 
 	protected:
 
-		BaseWidget* m_parent;
-		std::vector<BaseWidget*> children;
+		JBaseWidget* m_parent;
+		std::vector<JBaseWidget*> children;
 
 		JRect region;
 
