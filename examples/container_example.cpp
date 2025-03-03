@@ -1,9 +1,17 @@
 
 #include "jamb/jamb.h"
+#include <windows.h>
 
 class Win : public Jamb::JWindow
 {
 public:
+
+	void on_size()
+	{
+
+	}
+
+
 	int i;
 };
 
@@ -29,6 +37,14 @@ int main()
 	panel1.add_child(cpanel2);	 // will return false and do nothing, due to cpanel2 already having parent
 	panel2.add_child(cpanel1);	 // will return false and do nothing, due to cpanel1 already having parent
 	panel2.add_child(cpanel3);
+
+
+	MSG msg;
+	while (true) {
+		GetMessageA(&msg, NULL, 0, 0);
+		TranslateMessage(&msg);
+		DispatchMessageA(&msg);
+	}
 
 	return 0;
 }

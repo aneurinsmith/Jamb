@@ -1,7 +1,6 @@
 
 #pragma once
 #include "base_widget.h"
-#include "jamb/surface.h"
 
 namespace Jamb
 {
@@ -14,8 +13,6 @@ namespace Jamb
 	protected:
 		virtual void on_size() {}
 		virtual void render() {}
-
-		JSurface* m_surface;
 
 	};
 }
