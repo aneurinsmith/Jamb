@@ -1,9 +1,9 @@
 
+#pragma once
 #include <memory>
 #include <vector>
 #include <stdexcept>
 #include <algorithm>
-#include <iostream>
 
 namespace Jamb 
 {
@@ -35,7 +35,7 @@ namespace Jamb
 
 		bool add_child(JBaseWidget& child)
 		{
-			if (&child.get_parent()) {
+			if (child.get_parent()) {
 				return false;
 			}
 			else {
@@ -55,9 +55,9 @@ namespace Jamb
 
 
 
-		JBaseWidget& get_parent()
+		const JBaseWidget* get_parent() const
 		{
-			return *m_parent;
+			return m_parent;
 		}
 
 		int get_width()
