@@ -72,22 +72,20 @@ namespace Jamb
 
 	protected:
 
-		void* m_handle;
-
 		BaseWidget* m_parent;
 		std::vector<BaseWidget*> children;
 
 		JRect region;
 
-		void render()
+		void on_draw()
 		{
-			on_draw();
+			render();
 			for (const auto& child : children) {
-				child->render();
+				child->on_draw();
 			}
 		}
 
-		virtual void on_draw() = 0;
+		virtual void render() = 0;
 
 	};
 }
