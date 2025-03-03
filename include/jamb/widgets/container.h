@@ -6,6 +6,6 @@ namespace Jamb
 	class JContainer : public JBaseWidget
 	{
 	protected:
-		void render();
+		void render() {}
 	};
 }

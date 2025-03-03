@@ -7,6 +7,6 @@ namespace Jamb
 	class JWindow : public JBaseWidget
 	{
 	protected:
-		void render();
+		void render() {}
 	};
 }
