@@ -1,10 +1,10 @@
 
 #pragma once
 #include "base_widget.h"
+#include "jamb/surface.h"
 
 namespace Jamb
 {
-	class JSurface;
 	class JWindow : public JBaseWidget
 	{
 	public:
@@ -12,9 +12,9 @@ namespace Jamb
 		~JWindow();
 
 	protected:
-		void render() {}
+		virtual void on_size() {}
+		virtual void render() {}
 
-	private:
 		JSurface* m_surface;
 
 	};
