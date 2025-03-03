@@ -36,9 +36,23 @@ endif()
 #  LIBRARY CREATION  #
 #--------------------#
 
-# get the relevent source files
-file(GLOB_RECURSE jamb_src "src/*.h" "src/*.cpp")
-message(STATUS ${jamb_src})
+# get the generic source files
+file(GLOB_RECURSE generic_src "src/gen/*.h" "src/gen/*.cpp")
+
+# get the platform source files
+if(PLATFORM STREQUAL "win32")
+	file(GLOB_RECURSE platform_src "src/w32/*.h" "src/w32/*.cpp")
+elseif(PLATFORM STREQUAL "libx11")
+	file(GLOB_RECURSE platform_src "src/x11/*.h" "src/x11/*.cpp")
+endif()
+
+# get the coalesced source files
+set(jamb_src ${generic_src} ${platform_src})
+list(LENGTH jamb_src src_count)
+message(STATUS "Found ${src_count} source files")
+foreach(file IN LISTS jamb_src)
+	message(STATUS ${file})
+endforeach()
 
 # create the libjamb library
 add_library(jamb STATIC ${jamb_src})
