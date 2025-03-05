@@ -1,12 +1,11 @@
 
 #include "jamb/jamb.h"
-#include <windows.h>
 
 class Win : public Jamb::JWindow
 {
 public:
 
-	void on_size()
+	void on_size(int x, int y)
 	{
 
 	}
@@ -38,13 +37,5 @@ int main()
 	panel2.add_child(cpanel1);	 // will return false and do nothing, due to cpanel1 already having parent
 	panel2.add_child(cpanel3);
 
-
-	MSG msg;
-	while (true) {
-		GetMessageA(&msg, NULL, 0, 0);
-		TranslateMessage(&msg);
-		DispatchMessageA(&msg);
-	}
-
-	return 0;
+	return Jamb::run_loop();
 }
