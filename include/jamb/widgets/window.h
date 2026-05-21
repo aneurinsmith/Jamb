@@ -21,6 +21,8 @@ namespace Jamb
 		void hide();
 		void show();
 
+		void resize(uint32_t width, uint32_t height);
+		
 		void maximize();
 		void minimize();
 		void restore();

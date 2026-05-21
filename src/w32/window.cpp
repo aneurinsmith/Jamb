@@ -43,8 +43,13 @@ namespace Jamb
 			if (!handle)
 				throw std::runtime_error("Window creation failed");
 		}
+	}
 
-		on_create(JCreateEvent{ this, 800, 400 });
+	void JWindow::resize(uint32_t width, uint32_t height)
+	{
+		SetWindowPos((HWND)handle, nullptr, 
+			0, 0, width, height,
+			SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
 	}
 
 	void JWindow::hide()
