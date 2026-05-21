@@ -1,59 +1,89 @@
 
 #pragma once
+
+#include <jamb/events.h>
+
 #include <unordered_map>
 #include <memory>
+#include <algorithm>
+#include <thread>
+#include <mutex>
+#include <queue>
+#include <functional>
 
 namespace Jamb 
 {
-	class JWindow;
-
-	class JEvent
-	{
-	public:
-		JWindow* window;
-	};
-
 	class JEventLoop
 	{
 	public:
 
-		static JEventLoop& instance()
+		static JEventLoop& thread_instance()
 		{
-			static JEventLoop instance;
+			thread_local JEventLoop instance;
 			return instance;
 		}
 
-		bool run();
-		void stop();
-
-		JEvent get_message();
-		void send_message(JEvent);
-
-		void register_window(JWindow* window)
+		void pushEvent(JEvent* je)
 		{
-			window_loops[window] = this;
+			std::lock_guard<std::mutex> lock(queueMutex);
+			queue.push(je);
 		}
 
-		JEventLoop* get_loop(JWindow* window)
+		int run()
 		{
-			return window_loops[window];
+			is_running = true;
+
+			while (is_running)
+			{
+				pumpEvents();
+				procEvents();
+			}
+
+			return is_running + queue.size();
 		}
 
-	protected:
-		JEventLoop();
+		void stop()
+		{
+			is_running = false;
+		}
+
+		void procEvents()
+		{
+			while (true)
+			{
+				JEvent* je = nullptr;
+				{
+					std::lock_guard<std::mutex> lock(queueMutex);
+					if (queue.empty()) {
+						break;
+					}
+					je = queue.front();
+					queue.pop();
+				}
+
+				if (je) {
+					je->dispatch();
+				}
+			}
+		}
 
 	private:
+
+		void pumpEvents();
+
 		bool is_running;
-		static std::unordered_map<JWindow*, JEventLoop*> window_loops;
+
+		std::queue<JEvent*> queue;
+		std::mutex queueMutex;
 	};
 
-	inline bool run_loop()
+	inline int run_loop()
 	{
-		return Jamb::JEventLoop::instance().run();
+		return Jamb::JEventLoop::thread_instance().run();
 	}
 
 	inline void stop_loop()
 	{
-		Jamb::JEventLoop::instance().stop();
+		Jamb::JEventLoop::thread_instance().stop();
 	}
 }
