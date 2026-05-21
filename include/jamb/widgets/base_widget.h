@@ -27,10 +27,26 @@ namespace Jamb
 	class JBaseWidget
 	{
 	public:
+
 		JBaseWidget() : m_parent(nullptr) {};
 		JBaseWidget(JBaseWidget& parent)
 		{
 			parent.add_child(*this);
+		}
+
+		const JBaseWidget* get_parent() const
+		{
+			return m_parent;
+		}
+
+		int get_width()
+		{
+			return region.width();
+		}
+
+		int get_height()
+		{
+			return region.height();
 		}
 
 		bool add_child(JBaseWidget& child)
@@ -51,23 +67,6 @@ namespace Jamb
 			child.m_parent = this;
 			children.push_back(&child);
 			return true;
-		}
-
-
-
-		const JBaseWidget* get_parent() const
-		{
-			return m_parent;
-		}
-
-		int get_width()
-		{
-			return region.width();
-		}
-
-		int get_height()
-		{
-			return region.height();
 		}
 
 	protected:
