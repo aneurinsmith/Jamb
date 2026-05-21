@@ -9,6 +9,9 @@ include_directories("include")
 
 set(JAMB_VERSION 0.0.1)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
@@ -37,7 +40,7 @@ endif()
 #--------------------#
 
 # get the generic source files
-file(GLOB_RECURSE generic_src "src/gen/*.h" "src/gen/*.cpp")
+file(GLOB_RECURSE generic_src "src/gen/*/*.cpp" "src/gen/*.cpp")
 
 # get the platform source files
 if(PLATFORM STREQUAL "win32")
@@ -69,8 +72,7 @@ target_compile_definitions(jamb PUBLIC ${PLATFORM})
 
 # set c++ version to 17
 target_compile_features(jamb PUBLIC cxx_std_17)
-target_compile_options(jamb PUBLIC "-std=c++17")
-
+target_compile_features(jamb PUBLIC cxx_thread_local)
 
 
 #----------------------#
