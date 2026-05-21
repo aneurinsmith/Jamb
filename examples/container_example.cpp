@@ -3,20 +3,7 @@
 
 class Win : public Jamb::JWindow
 {
-public:
-
-	void on_size(int x, int y)
-	{
-
-	}
-
-
-	int i;
-};
-
-int main() 
-{
-	Win window;
+protected:
 
 	Jamb::JContainer container;
 	Jamb::JContainer panel1;
@@ -24,18 +11,39 @@ int main()
 	Jamb::JContainer cpanel1;
 	Jamb::JContainer cpanel2;
 	Jamb::JContainer cpanel3;
+	Jamb::JWindow jwin;
 
-	container.add_child(panel1);
-	container.add_child(panel2);
-	container.add_child(panel1); // will return false and do nothing, due to panel1 already having parent
+	void on_create(Jamb::JCreateEvent jce)
+	{
+		add_child(jwin);
+		jwin.init();
 
-	panel1.add_child(container); // will return false and do nothing, due to cycle prevention
-	panel1.add_child(panel1);	 // will return false and do nothing, due to cycle prevention
-	panel1.add_child(cpanel1);
-	panel1.add_child(cpanel2);
-	panel1.add_child(cpanel2);	 // will return false and do nothing, due to cpanel2 already having parent
-	panel2.add_child(cpanel1);	 // will return false and do nothing, due to cpanel1 already having parent
-	panel2.add_child(cpanel3);
+		container.add_child(panel1);
+		container.add_child(panel2);
+		container.add_child(panel1); // will return false and do nothing, due to panel1 already having parent
+
+		panel1.add_child(container); // will return false and do nothing, due to cycle prevention
+		panel1.add_child(panel1);	 // will return false and do nothing, due to cycle prevention
+		panel1.add_child(cpanel1);
+		panel1.add_child(cpanel2);
+		panel1.add_child(cpanel2);	 // will return false and do nothing, due to cpanel2 already having parent
+		panel2.add_child(cpanel1);	 // will return false and do nothing, due to cpanel1 already having parent
+		panel2.add_child(cpanel3);
+
+		show();
+	}
+
+	void on_size(Jamb::JSizeEvent jre)
+	{
+		printf("%i, %i\n", jre.height, jre.width);
+	}
+
+	int i = 0;
+};
+
+int main() 
+{
+	Win* window1 = Jamb::create_window<Win>();
 
 	return Jamb::run_loop();
 }
