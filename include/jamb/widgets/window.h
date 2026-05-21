@@ -5,17 +5,49 @@
 
 namespace Jamb
 {
+	typedef uintptr_t JHandle;
+
 	class JWindow : public JBaseWidget
 	{
 		friend class JEventLoop;
+		friend class JCreateEvent;
+		friend class JSizeEvent;
+		friend class JDestroyEvent;
+		friend class JDisplayEvent;
+
 	public:
-		JWindow();
+
+		void init();
+		void hide();
+		void show();
+
+		void maximize();
+		void minimize();
+		void restore();
+
+		JEventLoop* const eventLoop = &JEventLoop::thread_instance();
 
 	protected:
-		virtual void on_size(int width, int height) {}
-		virtual void on_destroy() {}
+
+		JHandle* handle = nullptr;
+
+		virtual void on_display(JDisplayEvent) {}
+		virtual void on_create(JCreateEvent) {}
+		virtual void on_size(JSizeEvent) {}
+		virtual void on_destroy(JDestroyEvent) {}
 
 		virtual void render() {}
-
 	};
+
+	template<typename T>
+	inline T* create_window()
+	{
+		static_assert(
+			std::is_base_of<JWindow, T>::value,
+			"T must derive from JWindow");
+
+		T* jwin = new T();
+		jwin->init();
+		return jwin;
+	}
 }

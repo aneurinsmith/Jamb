@@ -5,6 +5,7 @@
 #define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #define WINVER 0x0605
+
 #include <windows.h>
 #include <unordered_map>
 
@@ -12,7 +13,7 @@ namespace Jamb
 {
 	LRESULT CALLBACK HandleMessage(HWND wnd, UINT msg, WPARAM wpm, LPARAM lpm);
 
-	JWindow::JWindow()
+	void JWindow::init()
 	{
 		WNDCLASSEXA wcea = {};
 
@@ -26,20 +27,32 @@ namespace Jamb
 			wcea.lpszClassName = "Jamb";
 			wcea.style = CS_BYTEALIGNWINDOW | CS_DBLCLKS;
 
-			if (!RegisterClassExA(&wcea)) {
+			if (!RegisterClassExA(&wcea))
 				throw std::runtime_error("Window class failed to register");
-			}
 		}
 
-		JEventLoop::instance().register_window(this);
-		HWND handle = CreateWindowExA(0,
-			"Jamb", "JambWindow",
-			WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_VSCROLL,
-			CW_USEDEFAULT, CW_USEDEFAULT,
-			800, 400,
-			0, (HMENU)0, GetModuleHandleA(NULL), (void*)this);
-		if (!handle) {
-			throw std::runtime_error("Window creation failed");
+		if (!handle)
+		{
+			handle = (JHandle*)CreateWindowExA(0,
+				"Jamb", "JambWindow",
+				WS_OVERLAPPEDWINDOW | WS_VSCROLL,
+				CW_USEDEFAULT, CW_USEDEFAULT,
+				800, 400,
+				0, (HMENU)0, GetModuleHandleA(NULL), (void*)this);
+
+			if (!handle)
+				throw std::runtime_error("Window creation failed");
 		}
+
+		on_create(JCreateEvent{ this, 800, 400 });
+	}
+
+	void JWindow::hide()
+	{
+		ShowWindow((HWND)handle, false);
+	}
+	void JWindow::show()
+	{
+		ShowWindow((HWND)handle, true);
 	}
 }
