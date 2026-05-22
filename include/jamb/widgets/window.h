@@ -5,12 +5,12 @@
 
 namespace Jamb
 {
+	class JContext;
 	typedef uintptr_t JHandle;
 
 	class JWindow : public JBaseWidget
 	{
 		friend class JEventLoop;
-		friend class JRenderer;
 
 		friend class JCreateEvent;
 		friend class JSizeEvent;
@@ -19,6 +19,8 @@ namespace Jamb
 		friend class JDisplayEvent;
 
 	public:
+
+		JWindow();
 
 		void init();
 		void hide();
@@ -33,7 +35,9 @@ namespace Jamb
 	protected:
 
 		struct NativeWindowHandle;
-		NativeWindowHandle* handle;
+		NativeWindowHandle* handle = nullptr;
+
+		JContext* context;
 
 		virtual void on_display(JDisplayEvent&) {}
 		virtual void on_create(JCreateEvent&) {}

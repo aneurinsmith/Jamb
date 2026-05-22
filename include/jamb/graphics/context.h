@@ -3,6 +3,6 @@ namespace
 {
 	class JContext
 	{
-
+		JContext();
 	};
 }

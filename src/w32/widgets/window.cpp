@@ -17,6 +17,11 @@ namespace Jamb
 
 	LRESULT CALLBACK HandleMessage(HWND, UINT, WPARAM, LPARAM);
 
+	JWindow::JWindow()
+	{
+		handle = new NativeWindowHandle();
+	}
+
 	void JWindow::init()
 	{
 		WNDCLASSEXA wcea = {};
