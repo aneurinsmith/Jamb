@@ -1,6 +1,6 @@
 
 #include "jamb/widgets/window.h"
-#include "jamb/event_loop.h"
+#include "jamb/events/event_loop.h"
 
 #define WIN32_LEAN_AND_MEAN
 #define WINVER 0x0605

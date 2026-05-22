@@ -1,5 +1,5 @@
 
-#include "jamb/event_loop.h"
+#include "jamb/events/event_loop.h"
 #include "jamb/widgets/window.h"
 
 #define WIN32_LEAN_AND_MEAN
@@ -39,7 +39,7 @@ namespace Jamb
 			}
 			case WM_PAINT:
 			{
-				JDrawEvent* jde = new JDrawEvent(window);
+				JDrawEvent* jde = new JDrawEvent(window, 1, 1);
 				window->eventLoop->pushEvent(jde);
 				break;
 			}

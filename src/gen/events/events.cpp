@@ -1,5 +1,5 @@
 
-#include "jamb/event_loop.h"
+#include "jamb/events/event_loop.h"
 #include "jamb/widgets/window.h"
 
 namespace Jamb 

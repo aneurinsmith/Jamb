@@ -43,17 +43,6 @@ namespace Jamb
 	};
 
 
-	class JDrawEvent : public JEvent
-	{
-	public:
-		JDrawEvent() {}
-		JDrawEvent(JWindow* w)
-			: JEvent(w) {}
-
-	protected:
-		void dispatch();
-	};
-
 
 	class JSizeEvent : public JEvent
 	{
@@ -64,6 +53,18 @@ namespace Jamb
 
 		int width;
 		int height;
+
+	protected:
+		void dispatch();
+	};
+
+
+	class JDrawEvent : public JSizeEvent
+	{
+	public:
+		JDrawEvent() {}
+		JDrawEvent(JWindow* w, int width, int height)
+			: JSizeEvent(w, width, height) {}
 
 	protected:
 		void dispatch();

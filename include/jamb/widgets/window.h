@@ -1,7 +1,7 @@
 
 #pragma once
 #include "base_widget.h"
-#include "jamb/event_loop.h"
+#include "jamb/events/event_loop.h"
 
 namespace Jamb
 {
@@ -24,8 +24,6 @@ namespace Jamb
 		void hide();
 		void show();
 
-		//void resize(uint32_t width, uint32_t height);
-		
 		void maximize();
 		void minimize();
 		void restore();

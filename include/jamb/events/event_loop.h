@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <jamb/events.h>
+#include <jamb/events/events.h>
 
 #include <unordered_map>
 #include <memory>

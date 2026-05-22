@@ -40,13 +40,13 @@ endif()
 #--------------------#
 
 # get the generic source files
-file(GLOB_RECURSE generic_src "src/gen/*/*.cpp" "src/gen/*.cpp")
+file(GLOB_RECURSE generic_src "src/gen/*/*.h" "src/gen/*/*.cpp")
 
 # get the platform source files
 if(PLATFORM STREQUAL "win32")
-	file(GLOB_RECURSE platform_src "src/w32/*.h" "src/w32/*.cpp")
+	file(GLOB_RECURSE platform_src "src/w32/*/*.h" "src/w32/*/*.cpp")
 elseif(PLATFORM STREQUAL "libx11")
-	file(GLOB_RECURSE platform_src "src/x11/*.h" "src/x11/*.cpp")
+	file(GLOB_RECURSE platform_src "src/x11/*/*.h" "src/x11/*/*.cpp")
 endif()
 
 # get the coalesced source files
