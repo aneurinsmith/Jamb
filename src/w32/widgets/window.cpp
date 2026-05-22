@@ -2,7 +2,6 @@
 #include "jamb/widgets/window.h"
 #include "jamb/event_loop.h"
 
-#define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #define WINVER 0x0605
 
@@ -11,7 +10,12 @@
 
 namespace Jamb 
 {
-	LRESULT CALLBACK HandleMessage(HWND wnd, UINT msg, WPARAM wpm, LPARAM lpm);
+	struct JWindow::NativeWindowHandle
+	{
+		HWND hwnd;
+	};
+
+	LRESULT CALLBACK HandleMessage(HWND, UINT, WPARAM, LPARAM);
 
 	void JWindow::init()
 	{
@@ -31,33 +35,28 @@ namespace Jamb
 				throw std::runtime_error("Window class failed to register");
 		}
 
-		if (!handle)
+		if (!handle->hwnd)
 		{
-			handle = (JHandle*)CreateWindowExA(0,
+			handle->hwnd = CreateWindowExA(0,
 				"Jamb", "JambWindow",
-				WS_OVERLAPPEDWINDOW | WS_VSCROLL,
+				WS_OVERLAPPEDWINDOW,
 				CW_USEDEFAULT, CW_USEDEFAULT,
-				800, 400,
+				region.w, region.h,
 				0, (HMENU)0, GetModuleHandleA(NULL), (void*)this);
 
-			if (!handle)
+			eventLoop->procEvents();
+
+			if (!handle->hwnd)
 				throw std::runtime_error("Window creation failed");
 		}
 	}
 
-	void JWindow::resize(uint32_t width, uint32_t height)
-	{
-		SetWindowPos((HWND)handle, nullptr, 
-			0, 0, width, height,
-			SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
-	}
-
 	void JWindow::hide()
 	{
-		ShowWindow((HWND)handle, false);
+		ShowWindow(handle->hwnd, false);
 	}
 	void JWindow::show()
 	{
-		ShowWindow((HWND)handle, true);
+		ShowWindow(handle->hwnd, true);
 	}
 }

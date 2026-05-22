@@ -10,8 +10,11 @@ namespace Jamb
 	class JWindow : public JBaseWidget
 	{
 		friend class JEventLoop;
+		friend class JRenderer;
+
 		friend class JCreateEvent;
 		friend class JSizeEvent;
+		friend class JDrawEvent;
 		friend class JDestroyEvent;
 		friend class JDisplayEvent;
 
@@ -21,7 +24,7 @@ namespace Jamb
 		void hide();
 		void show();
 
-		void resize(uint32_t width, uint32_t height);
+		//void resize(uint32_t width, uint32_t height);
 		
 		void maximize();
 		void minimize();
@@ -31,14 +34,15 @@ namespace Jamb
 
 	protected:
 
-		JHandle* handle = nullptr;
+		struct NativeWindowHandle;
+		NativeWindowHandle* handle;
 
-		virtual void on_display(JDisplayEvent) {}
-		virtual void on_create(JCreateEvent) {}
-		virtual void on_size(JSizeEvent) {}
-		virtual void on_destroy(JDestroyEvent) {}
+		virtual void on_display(JDisplayEvent&) {}
+		virtual void on_create(JCreateEvent&) {}
+		virtual void on_size(JSizeEvent&) {}
+		virtual void on_destroy(JDestroyEvent&) {}
 
-		virtual void render() {}
+		virtual void render(JDrawEvent&) {}
 	};
 
 	template<typename T>
