@@ -15,6 +15,7 @@ namespace Jamb
 {
 	class JEventLoop
 	{
+		friend class JWindow;
 	public:
 
 		static JEventLoop& thread_instance()

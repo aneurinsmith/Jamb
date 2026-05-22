@@ -2,7 +2,6 @@
 #include "jamb/event_loop.h"
 #include "jamb/widgets/window.h"
 
-#define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #define WINVER 0x0605
 #include <Windows.h>
@@ -21,19 +20,27 @@ namespace Jamb
 				JWindow* window = static_cast<JWindow*>(reinterpret_cast<LPCREATESTRUCT>(lpm)->lpCreateParams);
 				SetWindowLongPtr(wnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(window));
 
-				window->eventLoop->pushEvent(new JCreateEvent{ window, 1, 1 });
-				window->eventLoop->procEvents();
+				JCreateEvent* jce = new JCreateEvent(window, 1, 1);
+				window->eventLoop->pushEvent(jce);
 				return true;
 			}
 			case WM_NCDESTROY:
 			{
-				window->eventLoop->pushEvent(new JDestroyEvent{ window });
+				JDestroyEvent* jde = new JDestroyEvent(window);
+				window->eventLoop->pushEvent(jde);
 				break;
 			}
 			case WM_SIZE:
 			{
-				window->eventLoop->pushEvent(new JSizeEvent{ window, LOWORD(lpm), HIWORD(lpm) });
+				JSizeEvent* jse = new JSizeEvent(window, LOWORD(lpm), HIWORD(lpm));
+				window->eventLoop->pushEvent(jse);
 				window->eventLoop->procEvents();
+				break;
+			}
+			case WM_PAINT:
+			{
+				JDrawEvent* jde = new JDrawEvent(window);
+				window->eventLoop->pushEvent(jde);
 				break;
 			}
 		}

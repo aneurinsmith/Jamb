@@ -1,11 +1,11 @@
 ﻿
-cmake_minimum_required (VERSION 3.12)
-project ("Jamb")
+cmake_minimum_required (VERSION 3.16)
+project ("Jamb" LANGUAGES CXX)
 
+include(FindPkgConfig)
 include(GenerateExportHeader)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
-include_directories("include")
 
 set(JAMB_VERSION 0.0.1)
 
@@ -61,8 +61,7 @@ endforeach()
 add_library(jamb STATIC ${jamb_src})
 
 # set include directory for header files
-target_include_directories(jamb 
-	PUBLIC
+target_include_directories(jamb PUBLIC
 	"$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
 	"$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 )
@@ -73,6 +72,7 @@ target_compile_definitions(jamb PUBLIC ${PLATFORM})
 # set c++ version to 17
 target_compile_features(jamb PUBLIC cxx_std_17)
 target_compile_features(jamb PUBLIC cxx_thread_local)
+
 
 
 #----------------------#
@@ -101,7 +101,7 @@ install(FILES
 
 # install cmake targets file
 install(EXPORT jambTargets
-	FILE "jambTargets.cmake"
+	FILE "JambTargets.cmake"
 	DESTINATION "${CMAKE_INSTALL_DATADIR}/jamb"
 	NAMESPACE jamb::
 )
@@ -121,14 +121,14 @@ write_basic_package_version_file(
 
 # export jambConfig
 configure_package_config_file(
-	"${CMAKE_CURRENT_SOURCE_DIR}/config/jambConfig.cmake.in"
-	"${CMAKE_INSTALL_DATADIR}/jambConfig.cmake"
+	"${CMAKE_CURRENT_SOURCE_DIR}/config/JambConfig.cmake.in"
+	"${CMAKE_INSTALL_DATADIR}/JambConfig.cmake"
 	INSTALL_DESTINATION "${CMAKE_INSTALL_DATADIR}"
 )
 
 # export jambTargets
 export(TARGETS jamb
-	FILE "${CMAKE_INSTALL_DATADIR}/jambTargets.cmake"
+	FILE "${CMAKE_INSTALL_DATADIR}/JambTargets.cmake"
 	NAMESPACE jamb::
 )
 

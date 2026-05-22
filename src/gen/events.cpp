@@ -21,8 +21,16 @@ namespace Jamb
 		window->on_display(*this);
 	}
 
+	void JDrawEvent::dispatch()
+	{
+		window->on_draw(*this);
+	}
+
 	void JSizeEvent::dispatch()
 	{
+		window->region.w = width;
+		window->region.h = height;
+
 		window->on_size(*this);
 	}
 }

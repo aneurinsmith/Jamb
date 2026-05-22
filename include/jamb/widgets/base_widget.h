@@ -7,21 +7,25 @@
 
 namespace Jamb 
 {
+	class JDrawEvent;
+
 	struct JRect
 	{
-		int left = 0,
-			top = 0,
-			right = 0,
-			bottom = 0;
+		int x = 0;
+		int y = 0;
+		int w = 200;
+		int h = 200;
 
-		int width()
-		{
-			return right - left;
-		}
-		int height()
-		{
-			return bottom - top;
-		}
+		int left()   const { return x; }
+		int top()    const { return y; }
+		int right()  const { return x + w; }
+		int bottom() const { return y + h; }
+
+		int width()  const { return w; }
+		int height() const { return h; }
+
+		void setWidth(int width) { w = width; }
+		void setHeight(int height) { h = height; }
 	};
 
 	class JBaseWidget
@@ -76,15 +80,15 @@ namespace Jamb
 
 		JRect region;
 
-		void on_draw()
+		void on_draw(JDrawEvent& jde)
 		{
-			render();
+			render(jde);
 			for (const auto& child : children) {
-				child->on_draw();
+				child->on_draw(jde);
 			}
 		}
 
-		virtual void render() = 0;
+		virtual void render(JDrawEvent&) = 0;
 
 	};
 }

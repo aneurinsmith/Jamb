@@ -11,13 +11,9 @@ protected:
 	Jamb::JContainer cpanel1;
 	Jamb::JContainer cpanel2;
 	Jamb::JContainer cpanel3;
-	Jamb::JWindow jwin;
 
-	void on_create(Jamb::JCreateEvent jce)
+	void on_create(Jamb::JCreateEvent& jce)
 	{
-		add_child(jwin);
-		jwin.init();
-
 		container.add_child(panel1);
 		container.add_child(panel2);
 		container.add_child(panel1); // will return false and do nothing, due to panel1 already having parent
@@ -33,17 +29,23 @@ protected:
 		show();
 	}
 
-	void on_size(Jamb::JSizeEvent jre)
+	void on_size(Jamb::JSizeEvent& jre)
 	{
-		printf("%i, %i\n", jre.height, jre.width);
+		printf("size %i, %i\n", jre.height, jre.width);
+	}
+
+	void render(Jamb::JDrawEvent& jde)
+	{
+
 	}
 
 	int i = 0;
 };
 
-int main() 
+int main()
 {
-	Win* window1 = Jamb::create_window<Win>();
+	Win window1;
+	window1.init();
 
 	return Jamb::run_loop();
 }
